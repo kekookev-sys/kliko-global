@@ -46,8 +46,22 @@ test('posting a task returns ranked matches, best skill overlap first', async ()
     assert.ok(body.matches.length >= 3);
 
     const top = body.matches[0];
-    assert.deepEqual(top.matchedSkills.sort(), ['node.js', 'postgresql', 'ranking']);
-    assert.ok(top.score >= body.matches[1].score, 'matches must be sorted by score');
+    // Best available overlap wins: the pool has no single freelancer holding all
+    // three required skills, so the top match covers two of them.
+    assert.equal(top.matchedSkills.length, 2);
+    assert.ok(top.matchedSkills.includes('node.js'));
+    assert.ok(top.matchedSkills.includes('postgresql'));
+
+    const scores = body.matches.map((match) => match.score);
+    assert.deepEqual(
+      scores,
+      [...scores].sort((a, b) => b - a),
+      'matches must be sorted by descending fit score'
+    );
+    for (const match of body.matches) {
+      assert.ok(match.score >= 0 && match.score <= 100, 'fit score stays within 0-100');
+      assert.ok(match.reasons.length > 0, 'each match explains its ranking');
+    }
 
     const fetched = await fetch(`${base}/api/tasks/${body.task.id}/matches`);
     assert.equal(fetched.status, 200);
