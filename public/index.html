@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kliko Global — instant tasks, intelligent matching</title>
+    <meta
+      name="description"
+      content="Kliko Global connects clients and freelancers through instant tasks and intelligent matching."
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">K</span>
+          <span class="brand-name">Kliko Global</span>
+        </a>
+        <span class="tagline">Instant tasks. Intelligent matching.</span>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Post a task, meet your best freelancer match</h1>
+        <p class="lede">
+          Kliko Global scores its freelancer pool against your task on skills, budget fit and
+          track record — no browsing profiles, no cold outreach.
+        </p>
+        <div class="stats" id="stats" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="post-heading">
+        <h2 id="post-heading">Post a task</h2>
+        <form id="task-form" novalidate>
+          <div class="field">
+            <label for="title">Task title</label>
+            <input id="title" name="title" type="text" required placeholder="Build a ranking endpoint" />
+          </div>
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+              placeholder="What needs to be delivered?"
+            ></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="skills">Required skills (comma separated)</label>
+              <input id="skills" name="skills" type="text" placeholder="node.js, ranking, postgresql" />
+            </div>
+            <div class="field">
+              <label for="budget">Budget (USD)</label>
+              <input id="budget" name="budget" type="number" min="0" step="10" value="900" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="client">Client name</label>
+            <input id="client" name="client" type="text" placeholder="Your company" />
+          </div>
+          <button type="submit" id="submit-task">Find matches</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="matches-heading" id="matches-panel" hidden>
+        <h2 id="matches-heading">Ranked matches</h2>
+        <p class="muted" id="matches-subtitle"></p>
+        <ol class="match-list" id="match-list"></ol>
+      </section>
+
+      <section class="panel" aria-labelledby="pool-heading">
+        <h2 id="pool-heading">Freelancer pool</h2>
+        <p class="muted">Every match comes from this vetted pool.</p>
+        <ul class="pool" id="pool"></ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>Kliko Global</span>
+        <span class="muted">Instant tasks · Intelligent matching</span>
+      </div>
+    </footer>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
